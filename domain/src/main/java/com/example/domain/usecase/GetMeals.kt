@@ -1,11 +1,10 @@
 package com.example.domain.usecase
 
+import com.example.domain.entity.Category
 import com.example.domain.repo.MealsRepo
 
 class GetMeals(private val mealsRepo: MealsRepo) {
    suspend operator fun invoke() = mealsRepo.getMealFromRemote()
-
    suspend  fun invokeLocal() = mealsRepo.getMealFromLocal()
-
-
+   suspend fun AddMealTodb(category: Category) = mealsRepo.addMeal(category)
 }

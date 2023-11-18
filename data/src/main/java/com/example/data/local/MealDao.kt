@@ -12,8 +12,8 @@ interface MealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(categoryEntity: CategoryEntity)
 
-    @Query("select * from cate_tabel")
-    suspend fun getMealsFromLocal():CategoryRespons
+    suspend fun getMealFromLocal():List<Category>
+    suspend fun addMeal(category: Category)
 
 
 }
