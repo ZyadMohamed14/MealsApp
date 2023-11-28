@@ -21,6 +21,9 @@ android {
     }
 
     buildTypes {
+        debug {
+
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -28,7 +31,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+
     }
+
     buildFeatures{
         viewBinding = true
     }

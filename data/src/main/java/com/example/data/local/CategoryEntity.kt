@@ -1,9 +1,11 @@
 package com.example.data.local
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "cate_tabel")
-data class CategoryEntity (@PrimaryKey(autoGenerate = true)val idCategory:Int,
+
+data class CategoryEntity (
 val strCategory: String,
 val strCategoryDescription: String,
 val strCategoryThumb: String)

@@ -4,15 +4,10 @@ package com.example.cleanarch
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat.getSystemService
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 
 import androidx.lifecycle.lifecycleScope
 import com.example.cleanarch.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         viewModel.getMealsFromRemote()
 
         lifecycleScope.launch {

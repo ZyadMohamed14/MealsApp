@@ -1,4 +1,4 @@
-package com.example.cleanarch.di
+package com.example.data.local
 
 import android.content.Context
 import com.example.data.local.MealDao

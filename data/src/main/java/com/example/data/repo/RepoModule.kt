@@ -1,4 +1,4 @@
-package com.example.cleanarch.di
+package com.example.data.repo
 
 import com.example.data.local.MealsRoomDatabase
 import com.example.data.remote.APiServices

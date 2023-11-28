@@ -1,20 +1,19 @@
 package com.example.cleanarch
 
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.local.CategoryEntity
-import com.example.data.local.MealDao
+import com.example.data.repo.Constans
+import com.example.data.remote.NetworkModule
+import com.example.data.remote.RetrofitClient
 import com.example.data.repo.MealsRepoImpl
-import com.example.domain.entity.Category
 import com.example.domain.entity.CategoryRespons
 import com.example.domain.usecase.GetMeals
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,37 +21,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MealsViewModel
-@Inject constructor(private val application: Application, private val getMealUseCase:GetMeals, private val mealsRepoImpl: MealsRepoImpl) :
-    AndroidViewModel(application){
+@Inject constructor( @ApplicationContext private val context: Context,
+                     private val getMealUseCase:GetMeals,
+                     private val mealsRepoImpl: MealsRepoImpl):ViewModel(){
+
 
     private val _categeories:MutableStateFlow<CategoryRespons?> = MutableStateFlow(null)
     val categeories: StateFlow<CategoryRespons?> = _categeories
-    private val _localCategeories:MutableStateFlow<CategoryRespons?> = MutableStateFlow(null)
-    val localcategeories: StateFlow<CategoryRespons?> = _categeories
-
-
     fun getMealsFromRemote(){
         viewModelScope.launch {
-            if(isWifiConnected(application.applicationContext)){
-                Log.d("zyad", "getMealsFromRemote: ")
+            if(isWifiConnected(context)){
+
                 // Fetch data from the remote API
                 val categoryResponse = getMealUseCase.invoke()
                 _categeories.value=categoryResponse
-
                 // Insert the data into the Room database
                 categoryResponse.categories.forEach {category ->
                     mealsRepoImpl.addMeal(category)
                 }
             }
             else{
-                Log.d("zyad", "getMealsFromLocal: ")
                 getMealsFromLocal()
             }
         }
     }
-
-
-
     fun getMealsFromLocal(){
         viewModelScope.launch {
             val catgoryList=getMealUseCase.invokeLocal()

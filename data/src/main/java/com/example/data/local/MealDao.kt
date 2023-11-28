@@ -10,10 +10,10 @@ import com.example.domain.entity.CategoryRespons
 @Dao
 interface MealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(categoryEntity: CategoryEntity)
-
+    suspend fun insert(category: Category)
+    @Query("select * from cate_tabel")
     suspend fun getMealFromLocal():List<Category>
-    suspend fun addMeal(category: Category)
+
 
 
 }

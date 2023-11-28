@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.domain.entity.Category
 
-@Database(entities = [CategoryEntity::class], version = 1, exportSchema = false)
+@Database(entities = [Category::class], version = 1, exportSchema = false)
 abstract class MealsRoomDatabase : RoomDatabase() {
 
     abstract fun mealDao(): MealDao
